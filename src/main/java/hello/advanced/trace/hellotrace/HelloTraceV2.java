@@ -22,12 +22,14 @@ public class HelloTraceV2 {
         return new TraceStatus(traceId, startTimeMs, message);
     }
 
-    public TraceStatus beginSync(String message) {
-        TraceId traceId = new TraceId();
+    //V2에서 추가
+    public TraceStatus beginSync(TraceId beforeTraceId,String message) {
+        //TraceId traceId = new TraceId();
+        TraceId nextId = beforeTraceId.createNextId();
         Long startTimeMs = System.currentTimeMillis();
-        log.info("[{}] {}{}", traceId.getId(), addSpace(START_PREFIX,
-                traceId.getLevel()), message);
-        return new TraceStatus(traceId, startTimeMs, message);
+        log.info("[{}] {}{}", nextId.getId(), addSpace(START_PREFIX,
+                nextId.getLevel()), message);
+        return new TraceStatus(nextId, startTimeMs, message);
     }
 
 
